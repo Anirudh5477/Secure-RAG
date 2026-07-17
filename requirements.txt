@@ -110,7 +110,7 @@ nest-asyncio==1.6.0
 nest-asyncio2==1.7.2
 networkx
 numexpr==2.14.1
-numpy==2.4.6
+numpy
 onnxruntime==1.27.0
 openai==2.44.0
 orjson==3.11.9
