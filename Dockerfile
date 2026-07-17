@@ -10,8 +10,8 @@ COPY requirements.txt .
 # 4. Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Copy ONLY the specific requested project files
-COPY app.py requirements.txt retrieval.py Guardrails.py cache_layer.py Dockerfile ./
+# 5. Copy the rest of your project files
+COPY . .
 
 # 6. Expose the port Streamlit uses
 EXPOSE 8501
