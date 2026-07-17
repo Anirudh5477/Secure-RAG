@@ -108,7 +108,7 @@ murmurhash==1.0.15
 narwhals==2.24.0
 nest-asyncio==1.6.0
 nest-asyncio2==1.7.2
-networkx==3.6.1
+networkx
 numexpr==2.14.1
 numpy==2.4.6
 onnxruntime==1.27.0
