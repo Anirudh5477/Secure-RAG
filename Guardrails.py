@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from presidio_analyzer import AnalyzerEngine
 from presidio_anonymizer import AnonymizerEngine
 from presidio_anonymizer.entities import OperatorConfig
+from presidio_analyzer.nlp_engine import NlpEngineProvider
 
 # NEW IMPORTS FOR THE BOUNCER
 from langchain_groq import ChatGroq
@@ -13,7 +14,19 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
 print("⚙️ Initializing Security Middleware Engines...")
-analyzer = AnalyzerEngine()
+
+# 1. Define the custom configuration targeting the small model
+nlp_configuration = {
+    "nlp_engine_name": "spacy",
+    "models": [{"lang_code": "en", "model_name": "en_core_web_sm"}]
+}
+
+# 2. Build the engine provider with the configuration
+provider = NlpEngineProvider(nlp_configuration=nlp_configuration)
+nlp_engine = provider.create_engine()
+
+# 3. Pass the customized engine into the Analyzer
+analyzer = AnalyzerEngine(nlp_engine=nlp_engine, supported_languages=["en"])
 anonymizer = AnonymizerEngine()
 
 # Initialize the blazing-fast Groq model just for security checks
