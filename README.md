@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Secure-RAG
+#  Secure-RAG
 ### Enterprise-Grade, Role-Isolated AI Knowledge Assistant
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Azure%20App%20Service-0078d4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://secure-rag-chatbot-f6cneef5hrbmgpa0.centralindia-01.azurewebsites.net)
@@ -17,7 +17,7 @@
 
 ---
 
-## 🔴 Live Demo
+##  Live Demo
 
 **URL:** https://secure-rag-chatbot-f6cneef5hrbmgpa0.centralindia-01.azurewebsites.net
 
@@ -34,7 +34,7 @@ Use the following credentials to explore role isolation in action:
 
 ---
 
-## 🧠 The Problem This Solves
+##  The Problem This Solves
 
 Most RAG chatbot tutorials build a system that is dangerously naive:
 
@@ -48,7 +48,7 @@ In a real enterprise, this is a critical security failure. An intern in Marketin
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -80,7 +80,7 @@ Every single request passes through **8 sequential stages** before an answer is 
 
 ---
 
-## ✨ Core Features & Engineering Challenges
+##  Core Features & Engineering Challenges
 
 ### 🔒 1. Role-Based Access Control (RBAC) — The Central Challenge
 
@@ -108,7 +108,7 @@ results = vector_store.similarity_search(query, k=6, filter=rbac_filter)
 
 ---
 
-### 🛡️ 2. Intent Guardrail — LLM-as-a-Judge Security Router
+###  2. Intent Guardrail — LLM-as-a-Judge Security Router
 
 Before a query ever touches the knowledge base, a separate LLM call evaluates it as a security router. This prevents prompt injection, off-topic abuse, and compliance violations.
 
@@ -121,7 +121,7 @@ The decision is parsed by checking for the **substring** `"SAFE"` rather than an
 
 ---
 
-### 🔍 3. PII Scrubbing — Pre-Query Anonymization
+###  3. PII Scrubbing — Pre-Query Anonymization
 
 After guardrail approval, the query passes through Microsoft **Presidio** (`presidio_analyzer` + `presidio_anonymizer`) powered by the `en_core_web_lg` spaCy NER model. Names, emails, phone numbers, and IDs are redacted before the query reaches the LLM.
 
@@ -129,7 +129,7 @@ This ensures the system cannot be weaponized as a PII exfiltration tool even by 
 
 ---
 
-### ⚡ 4. Role-Scoped Semantic LRU Cache
+###  4. Role-Scoped Semantic LRU Cache
 
 A naive cache would let Employee A receive Employee B's answer if they asked a similar question. Secure-RAG implements a custom **LRU semantic cache** scoped by department.
 
@@ -141,7 +141,7 @@ The same question from HR and Engineering generates separate cache entries with 
 
 ---
 
-### 📄 5. Markdown-Aware Two-Stage Ingestion
+###  5. Markdown-Aware Two-Stage Ingestion
 
 The ingestion pipeline (`ingest.py`) uses a two-stage splitting strategy:
 
@@ -152,7 +152,7 @@ The Qdrant collection is **dropped and recreated** on each ingestion run, preven
 
 ---
 
-### 📊 6. LangSmith Observability & Synthetic Cost Tracking
+###  6. LangSmith Observability & Synthetic Cost Tracking
 
 Every LLM call is traced to the **LangSmith cloud dashboard**. Per-request token usage is extracted from Groq response metadata and used to calculate synthetic cost:
 
@@ -163,7 +163,7 @@ This enables per-query cost tracking, latency monitoring, and conversation-level
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 Secure-RAG/
@@ -188,7 +188,7 @@ Secure-RAG/
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
@@ -203,7 +203,7 @@ Secure-RAG/
 
 ---
 
-## 🚀 Local Setup
+##  Local Setup
 
 ### Prerequisites
 - Python 3.10+
@@ -250,7 +250,7 @@ streamlit run app.py
 
 ---
 
-## 🐳 Docker Deployment
+##  Docker Deployment
 
 ```bash
 # Build the image
@@ -266,7 +266,7 @@ docker run -p 8501:8501 \
 
 ---
 
-## 💡 Key Design Decisions
+##  Key Design Decisions
 
 | Decision | Why |
 |----------|-----|
@@ -277,7 +277,7 @@ docker run -p 8501:8501 \
 | **Qdrant collection drop-and-recreate** on ingest | Eliminates stale data and embedding drift from partial re-ingests |
 | **`python:3.10-slim` Docker base** | Minimal attack surface and fast build times |
 
-## 🔮 Future Roadmap
+##  Future Roadmap
 
 - [ ] **Multi-modal support** — Ingest PDFs with embedded charts and tables
 - [ ] **Admin dashboard** — Real-time usage analytics per department and employee
